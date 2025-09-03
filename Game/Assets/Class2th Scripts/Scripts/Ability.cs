@@ -1,14 +1,10 @@
 using UnityEngine;
 
-public class Ability : MonoBehaviour
+public class Ability
 {
-    public int strength = 5;
-
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public int strength = 40;
+    public Ability()
     {
-        Debug.Log("strngth : " + strength);
+        Debug.Log("Created Ability");
     }
 }
