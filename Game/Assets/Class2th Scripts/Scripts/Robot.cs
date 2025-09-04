@@ -2,14 +2,16 @@ using UnityEngine;
 
 public class Robot : MonoBehaviour
 {
-    private Ability ability;
+    [SerializeField]  Ability ability;
     private void Awake()
     {
+        //ability = new Ability();
         // Awake 객체가 생성될 때 호출되는 함수로, 객체가 비활성화되어
         // 있을 때 에도 호출되며, 단 한 번만 호출되는 함수입니다.
        // ability = GetComponent<Ability>();
         Debug.Log("Awake");
-        ability = new Ability();
+        Debug.Log(ability.Strength);
+
 
     }
     private void OnEnable()
@@ -46,4 +48,13 @@ public class Robot : MonoBehaviour
     //    // LateUpdate : 한 프레임의 마지막 단계에서 호출되는 이벤트 함수입니다.
     //    Debug.Log("LageUpdate");
     //}
+    private void OnDisable()
+    {
+        // OnDisable : 객체가 비활성화되었을 때 호출되는 이벤트 함수입니다.
+        Debug.Log("OnDisable");
+    }
+    private void OnDestroy()
+    {
+        Debug.Log("OnDestroy");
+    }
 }
