@@ -1,30 +1,39 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Move))]
 public class Character : MonoBehaviour
 {
-    [SerializeField] Vector3 direction;
+    Vector3 direction;
     public float moveSpeed = 10.0f; // 이동 속도
 
+    [SerializeField] Move move;
+    //Move mover;
+    //void Awake()
+    //{
+    //    mover = GetComponent<Move>();
+    //}
+    private void Awake()
+    {
+        move = GetComponent<Move>();
+    }
     void Update()
     {
-        //대각선 빠른거 해결법 벡터를 1로 설정
-        direction.Normalize();
-        // Time.deltaTime
-        // 마지막 프레임 이후의 완료되는 시간
-        direction.x = Input.GetAxisRaw("Horizontal");
-        direction.z = Input.GetAxisRaw("Vertical");
-        transform.position = transform.position + direction* moveSpeed * Time.deltaTime;
+        move.OnMove(new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")));
+        //direction.x = Input.GetAxisRaw("Horizontal");
+        //direction.z = Input.GetAxisRaw("Vertical");
+        //Vector3 dir = new Vector3(direction.x, 0f, direction.z);
+        //mover.OnMove(dir);
+        //Debug.Log("현재 좌표: " + transform.position);
 
+        #region 참고자료
         //float moveX = Input.GetAxis("Horizontal"); // -1(A) ~ +1(D)
         //float moveZ = Input.GetAxis("Vertical");   // -1(S) ~ +1(W)
         //
         //Vector3 direction = new Vector3(moveX, 0, moveZ);
         //
         //transform.position += direction * 0.1f; // 속도 고정값 0.1
-        Debug.Log("현재 좌표: " + transform.position);
 
         // Vector3  pos = transform.position;
-        #region 참고자료
         //if (Input.GetKeyDown(KeyCode.W)) transform.position += Vector3.forward;
         //if (Input.GetKeyDown(KeyCode.A)) transform.position += Vector3.left;
         //if (Input.GetKeyDown(KeyCode.S)) transform.position += Vector3.back;
