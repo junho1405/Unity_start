@@ -1,5 +1,5 @@
+using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -8,30 +8,57 @@ public class CreateManager : MonoBehaviour
 {
 
     [SerializeField] GameObject prefab;
+    [SerializeField] int index;
     [SerializeField] int count;
     [SerializeField] List<GameObject> unityList;
     [SerializeField] float time;
 
     void Start()
     {
+        Initialize();
+        StartCoroutine(Coroutine());
+    }
+    void Initialize()
+    {
         unityList.Capacity = 10;
-        for (int i = 1; i < count; i++)
+        for (int i = 0; i < count; i++)
         {
             GameObject clone = Instantiate(prefab, gameObject.transform);
             clone.SetActive(false);
             unityList.Add(clone);
         }
-
-
     }
-
-    void Update()
+    bool ExmineActive()
     {
-        time += Time.deltaTime;
-        if(time >=5.0f)
+        for(int i = 0; i<unityList.Count; i++)
         {
-            Debug.Log("call");
-            time = 0.0f;
+            if (unityList[i].activeSelf == false)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    IEnumerator Coroutine()
+    {
+        Debug.Log("Start");
+        while (true)
+        {
+            yield return new WaitForSeconds(2.0f);  
+            index = Random.Range(0, unityList.Count);
+                Debug.Log(index);
+            while (unityList[index].activeSelf)
+            {
+                index = (index+1)%unityList.Count;
+            }
+            unityList[index].SetActive(true);
+            if(ExmineActive())
+            {
+                Debug.Log("³¡");
+                yield break;
+            }
+
         }
     }
 }
+
