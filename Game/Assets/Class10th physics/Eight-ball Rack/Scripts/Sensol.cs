@@ -16,6 +16,10 @@ public class Sensol : MonoBehaviour
         //    rb.AddForce(Vector3.up * 10f, ForceMode.Impulse);
         //    Debug.Log(other.name + " 위로 발사!");
         //}
+        if (other.gameObject.tag != "Test")
+        {
+            Debug.Log("올바른대상이 아닙니다.");
+        }
     }
     private void OnTriggerStay(Collider other)
     {
