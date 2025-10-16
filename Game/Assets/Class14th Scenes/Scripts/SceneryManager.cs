@@ -3,19 +3,27 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
 public class SceneryManager : MonoBehaviour
 {
     [SerializeField] Slider progress;
     [SerializeField] GameObject screen;
     [SerializeField] float displayProgress;
+
     private void Awake()
     {
+        var objects = FindObjectsOfType<SceneryManager>();
+        if(objects.Length >1)
+        {
+            Destroy(gameObject);
+            return;
+        }
         DontDestroyOnLoad(gameObject);
     }
 
-    public void Coroutine()
+    public void LoadScene(int buildIndex)
     {
-        StartCoroutine(TransitionScene(1));
+        StartCoroutine(TransitionScene(buildIndex));
     }
 
     public IEnumerator TransitionScene(int index)
@@ -42,18 +50,15 @@ public class SceneryManager : MonoBehaviour
             // 작업의 진행 상태를 나타내는 변수입니다. (읽기전용)
             if(asyncOperation.progress >= 0.9f)
             {
-
-
-                progress.value = Mathf.Lerp(progress.value, 1.0f, Time.deltaTime);
-                if(progress.value < 0.99f)
+                displayProgress = Mathf.MoveTowards(displayProgress, 1.0f, Time.deltaTime);
+                if(displayProgress >= 0.99f)
                 {
                     asyncOperation.allowSceneActivation = true;
-                    
-                    
                 }
             }
             progress.value = displayProgress;
             yield return null;
+
         }
         screen.SetActive(false);
 

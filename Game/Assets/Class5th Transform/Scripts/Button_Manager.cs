@@ -8,6 +8,8 @@ public class Button_Manager : MonoBehaviour
 {
     [SerializeField] Button[] buttonList;
     [SerializeField] string[] titleList = new string[3] { "Start", "Option" , "Quit" };
+    internal object onClick;
+
     private void Start()
     {
         Action[] actions = { Execute , Option , Quit};
